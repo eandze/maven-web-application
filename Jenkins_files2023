@@ -34,3 +34,4 @@ Thank you,
 ASTRID ANDZE''', recipientProviders: [developers()], subject: 'build status', to: 'astrid.andze@gmail.com'
     }
 }
+}
