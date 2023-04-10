@@ -6,6 +6,7 @@ node{
      stage('2MavenBuild'){
        sh "${mavenHome}/bin/mvn package"
     }
+    
      stage('3CodeQuality'){
         sh "${mavenHome}/bin/mvn sonar:sonar"
     } 
@@ -32,6 +33,5 @@ The build is done, please confirm on your end if you do not mind
 Thank you, 
 
 ASTRID ANDZE''', recipientProviders: [developers()], subject: 'build status', to: 'astrid.andze@gmail.com'
-    }
-}
-}
+    } 
+ }
