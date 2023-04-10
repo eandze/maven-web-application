@@ -14,8 +14,8 @@ node{
        sh "${mavenHome}/bin/mvn deploy"
     }  
     stage('5deploy2UAT'){
-      deploy adapters: [tomcat9(credentialsId: 'b059daf7-deb5-4722-82fc-d271d4036bf6', path: '', url: 'http://54.210.196.31:8177/')], contextPath: null, war: 'target/*war'
-    }
+      deploy adapters: [tomcat9(credentialsId: 'b059daf7-deb5-4722-82fc-d271d4036bf6', path: '', url: 'http://172.31.50.130:8177/')], contextPath: null, war: 'target/*war'
+          }
     stage('6Manualapproval'){
     sh "echo 'ready for review' "
     timeout(time:5, unit:'HOURS') {
@@ -23,7 +23,7 @@ node{
   }
 }
      stage('7deploy2prod'){
-      deploy adapters: [tomcat9(credentialsId: 'b059daf7-deb5-4722-82fc-d271d4036bf6', path: '', url: 'http://54.210.196.31:8177/')], contextPath: null, war: 'target/*war'
+      deploy adapters: [tomcat9(credentialsId: 'b059daf7-deb5-4722-82fc-d271d4036bf6', path: '', url: 'http://172.31.50.130:8177/')], contextPath: null, war: 'target/*war'
     }
      stage('8emailNotify'){
         emailext body: '''Hello team,
