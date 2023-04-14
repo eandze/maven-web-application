@@ -39,7 +39,7 @@ stages {
 
   stage('5.DeployToUAT') {
     steps {
-      deploy adapters: [tomcat9(credentialsId: 'b059daf7-deb5-4722-82fc-d271d4036bf6', path: '', url: 'http://54.210.196.31:8177/')], contextPath: null, war: 'target/*war'
+      deploy adapters: [tomcat9(credentialsId: 'b059daf7-deb5-4722-82fc-d271d4036bf6', path: '', url: 'http://172.31.50.130:8177/')], contextPath: null, war: 'target/*war'
     }
   }
 
