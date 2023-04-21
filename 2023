@@ -1,0 +1,70 @@
+pipeline{
+  agent {
+  label 'master'
+}
+ tools {
+  maven 'maven 3.9.1'
+}
+  //options{}
+ // triggers{}
+
+stages {
+  stage('1.clone') {
+    steps {
+      sh 'echo \'cloning the latest application\''
+      git 'https://github.com/eandze/maven-web-application'
+    }
+  }
+
+  stage('2.buildtest') {
+    steps {
+      sh 'echo \'attempting to build and test cases\''
+      sh 'mvn clean package'
+    }
+  }
+
+  stage('3.CodeQuality') {
+    steps {
+      sh 'echo \'setup SonarquBe authentification \''
+      sh 'mvn sonar:sonar'
+    }
+  }
+
+  stage('4.UploadArtifacts') {
+    steps {
+      sh 'echo \'setup Nexus authentification \''
+      sh 'mvn sonar:sonar'
+    }
+  }
+
+  stage('5.DeployToUAT') {
+    steps {
+      deploy adapters: [tomcat9(credentialsId: 'b059daf7-deb5-4722-82fc-d271d4036bf6', path: '', url: 'http://172.31.50.130:8177/')], contextPath: null, war: 'target/*war'
+    }
+  }
+
+}
+  post {
+  always {
+    emailext body: '''This element needs to be added.
+
+Thank you.
+
+Astrid Andze''', recipientProviders: [developers()], subject: 'build aborted', to: 'astrid.andze@gmail.com'
+  }
+  
+  success {
+    emailext body: '''Great Job team.
+
+Astrid Andze''', recipientProviders: [developers()], subject: 'build success', to: 'astrid.andze@gmail.com'
+  }
+  
+  failure {
+    emailext body: '''This project needs to be reviewed.
+
+Thank you.
+
+Astrid Andze''', recipientProviders: [developers()], subject: 'build failure', to: 'astrid.andze@gmail.com'
+  }
+  }
+  }
